@@ -22,16 +22,11 @@ func main() {
 		for k, v := range r.Header {
 			headers[k] = strings.Join(v, ", ")
 		}
-		entry := LogEntry{
-			Timestamp: time.Now().UTC().Format(time.RFC3339Nano),
-			Method:    r.Method,
-			Path:      r.URL.Path,
-			Headers:   headers,
-			IP:        r.RemoteAddr,
-		}
+		entry := LogEntry{Timestamp: time.Now().UTC().Format(time.RFC3339Nano), Method: r.Method, Path: r.URL.Path, Headers: headers, IP: r.RemoteAddr}
+		fmt.Printf("%+v\n", entry)
 		w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(entry)
+		_ = json.NewEncoder(w).Encode(entry)
 	})
-	fmt.Println("logger-service running on :8089")
+	println("logger-service listening on :8089")
 	http.ListenAndServe(":8089", nil)
 }
