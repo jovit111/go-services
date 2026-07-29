@@ -1,0 +1,6 @@
+.flymake_*
+*.prof
+.cover
+bin/
+dist/
+tmp/
